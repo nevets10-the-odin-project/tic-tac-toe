@@ -26,12 +26,15 @@ const game = (() => {
 			_board.map((row) => row[colChoice]).filter((col) => col === currentToken)
 				.length === 3;
 
+		let isDiagonal1Win = false;
+		let isDiagonal2Win = false;
+
 		if (
 			(rowChoice === 0 && colChoice === 0) ||
 			(rowChoice === 1 && colChoice === 1) ||
 			(rowChoice === 2 && colChoice === 2)
 		) {
-			const isDiagonal1Win =
+			isDiagonal1Win =
 				[_board[0][0], _board[1][1], _board[2][2]].filter(
 					(diag) => diag === currentToken
 				).length === 3;
@@ -42,15 +45,13 @@ const game = (() => {
 			(rowChoice === 1 && colChoice === 1) ||
 			(rowChoice === 0 && colChoice === 2)
 		) {
-			const isDiagonal2Win =
+			isDiagonal2Win =
 				[_board[2][0], _board[1][1], _board[0][2]].filter(
 					(diag) => diag === currentToken
 				).length === 3;
 		}
 
-		return isRowWin || isColWin || isDiagonal1Win || isDiagonal2Win
-			? true
-			: false;
+		return isRowWin || isColWin || isDiagonal1Win || isDiagonal2Win;
 	};
 
 	const newPlayer = (playerName) => {
@@ -70,14 +71,20 @@ const game = (() => {
 			return "Invalid choice.";
 		} else {
 			_board[rowChoice][colChoice] = _isPlayer1Turn ? "X" : "O";
-			_isPlayer1Turn = !_isPlayer1Turn;
 			return _board;
 		}
 	};
 
-	const processInput = (rowChoice, colChoice) => {
-		return _updateBoard(rowChoice, colChoice), _checkForWin(rowChoice, colChoice);
+	const processChoice = (rowChoice, colChoice) => {
+		const updatedBoard = _updateBoard(rowChoice, colChoice);
+		const hasWon = _checkForWin(rowChoice, colChoice);
+		_isPlayer1Turn = !_isPlayer1Turn;
+
+		return {
+			updatedBoard,
+			hasWon,
+		};
 	};
 
-	return { newPlayer, processInput };
+	return { newPlayer, processChoice };
 })();
