@@ -1,5 +1,5 @@
 const gameBoard = (() => {
-	const board = {
+	const _board = {
 		a1: null,
 		a2: null,
 		a3: null,
@@ -11,15 +11,15 @@ const gameBoard = (() => {
 		c3: null,
 	};
 
-	let isPlayer1 = true;
+	let _isPlayer1 = true;
 
 	const updateBoard = (playerChoice) => {
-		if (board[playerChoice] !== null) {
+		if (_board[playerChoice] !== null) {
 			return "Invalid choice.";
 		} else {
-			board[playerChoice] = isPlayer1 ? "X" : "O";
-			isPlayer1 = !isPlayer1;
-			return board;
+			_board[playerChoice] = _isPlayer1 ? "X" : "O";
+			_isPlayer1 = !_isPlayer1;
+			return _board;
 		}
 	};
 
