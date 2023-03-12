@@ -10,7 +10,7 @@ I am documenting my current ideas for the development before actually writing th
 ---
 
 High level steps:
-1. Create game board module
+1. Create game ~~board~~ engine module
 2. Create player factory function
 3. Run through a game via the console to validate functionality
 4. Create UI
@@ -22,7 +22,8 @@ High level steps:
 ---
 
 Modules; single instance items:
-1. Game board/engine object
+1. Game engine object
+  * Controls the flow of the game
   * Determines whose turn it is
   * Keeps track of the board spots that players have taken
   * Checks for the win/tie condition
@@ -45,4 +46,5 @@ Factory objects; multiple instance items created with factory functions:
 ---
 
 Notes
-1. Due to the complexity (or lack thereof) of the game, it seems like having a single module to manage the game board and engine will suffice. However, it might be necessary to split those out into separate modules later on.
+1. ~~Due to the complexity (or lack thereof) of the game, it seems like having a single module to manage the game board and engine will suffice. However, it might be necessary to split those out into separate modules later on.~~
+2. Re-reading the prompt again, it does mention having an object to control the flow of the game. I think that instead of a game board module, it would be a game engine module that holds everything. This would technically achieve the goal of having a little global code as possible because it's all in a module...? My thoughts for tackling the project seems to differ a bit from the prompt; I'm not immediately seeing the benefit of having the board array inside of an object by itself.
