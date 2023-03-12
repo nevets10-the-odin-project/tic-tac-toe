@@ -65,11 +65,11 @@ const game = (() => {
 		}
 	};
 
-	const updateBoard = (playerChoice) => {
-		if (_board[playerChoice] !== null) {
+	const updateBoard = (rowChoice, colChoice) => {
+		if (_board[rowChoice][colChoice] !== null) {
 			return "Invalid choice.";
 		} else {
-			_board[playerChoice] = _isPlayer1Turn ? "X" : "O";
+			_board[rowChoice][colChoice] = _isPlayer1Turn ? "X" : "O";
 			_isPlayer1Turn = !_isPlayer1Turn;
 			return _board;
 		}
