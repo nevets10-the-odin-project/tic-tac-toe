@@ -65,7 +65,7 @@ const game = (() => {
 		}
 	};
 
-	const updateBoard = (rowChoice, colChoice) => {
+	const _updateBoard = (rowChoice, colChoice) => {
 		if (_board[rowChoice][colChoice] !== null) {
 			return "Invalid choice.";
 		} else {
@@ -75,5 +75,9 @@ const game = (() => {
 		}
 	};
 
-	return { newPlayer, updateBoard };
+	const processInput = (rowChoice, colChoice) => {
+		return _updateBoard(rowChoice, colChoice), _checkForWin(rowChoice, colChoice);
+	};
+
+	return { newPlayer, processInput };
 })();
