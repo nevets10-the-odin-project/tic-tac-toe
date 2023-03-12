@@ -25,3 +25,11 @@ const gameBoard = (() => {
 
 	return { updateBoard };
 })();
+
+const playerFactory = (newName, isPlayerHuman) => {
+	const name = newName;
+	const isHuman = isPlayerHuman;
+	let score = 0;
+
+	return { name, isHuman, score };
+};
