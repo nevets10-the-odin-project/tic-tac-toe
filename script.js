@@ -1,15 +1,9 @@
 const game = (() => {
-	const _board = {
-		a1: null,
-		a2: null,
-		a3: null,
-		b1: null,
-		b2: null,
-		b3: null,
-		c1: null,
-		c2: null,
-		c3: null,
-	};
+	const _board = [
+		[null, null, null],
+		[null, null, null],
+		[null, null, null],
+	];
 
 	let _isPlayer1Turn = true;
 	let _player1;
