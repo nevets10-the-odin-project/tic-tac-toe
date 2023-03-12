@@ -22,6 +22,43 @@ const game = (() => {
 		return { name, isHuman, score };
 	};
 
+	const _checkForWin = (rowChoice, colChoice) => {
+		const currentToken = _isPlayer1Turn ? "X" : "O";
+
+		const isRowWin =
+			_board[rowChoice].filter((row) => row === currentToken).length === 3;
+
+		const isColWin =
+			_board.map((row) => row[colChoice]).filter((col) => col === currentToken)
+				.length === 3;
+
+		if (
+			(rowChoice === 0 && colChoice === 0) ||
+			(rowChoice === 1 && colChoice === 1) ||
+			(rowChoice === 2 && colChoice === 2)
+		) {
+			const isDiagonal1Win =
+				[_board[0][0], _board[1][1], _board[2][2]].filter(
+					(diag) => diag === currentToken
+				).length === 3;
+		}
+
+		if (
+			(rowChoice === 2 && colChoice === 0) ||
+			(rowChoice === 1 && colChoice === 1) ||
+			(rowChoice === 0 && colChoice === 2)
+		) {
+			const isDiagonal2Win =
+				[_board[2][0], _board[1][1], _board[0][2]].filter(
+					(diag) => diag === currentToken
+				).length === 3;
+		}
+
+		return isRowWin || isColWin || isDiagonal1Win || isDiagonal2Win
+			? true
+			: false;
+	};
+
 	const newPlayer = (playerName) => {
 		if (_player1 === undefined) {
 			_player1 = _playerFactory(playerName);
