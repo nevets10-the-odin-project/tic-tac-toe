@@ -88,9 +88,8 @@ const game = (() => {
 
 	const boardSpots = document.querySelectorAll(".board-spot");
 
-	const enableBoard = () => {
+	const initializeBoard = () => {
 		boardSpots.forEach((spot, index) => {
-			spot.addEventListener("click", _placeToken);
 			_board[index].element = spot;
 		});
 	};
@@ -124,9 +123,10 @@ const game = (() => {
 		});
 	};
 
-	return { newPlayer, processChoice, enableBoard, _board, startGame };
+	return { newPlayer, processChoice, initializeBoard, _board, startGame };
 })();
 
-game.enableBoard();
+game.initializeBoard();
+game.startGame();
 
 //game._board.filter(slot => slot.row === 0).map(slot => slot.token)
