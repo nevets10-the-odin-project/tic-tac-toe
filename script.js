@@ -1,5 +1,15 @@
 const game = (() => {
-	const _board = [null, null, null, null, null, null, null, null, null];
+	const _board = [
+		{ token: null, element: null, row: 0, col: 0, diag: 0 },
+		{ token: null, element: null, row: 0, col: 1, diag: null },
+		{ token: null, element: null, row: 0, col: 2, diag: 2 },
+		{ token: null, element: null, row: 1, col: 0, diag: null },
+		{ token: null, element: null, row: 1, col: 1, diag: 1 },
+		{ token: null, element: null, row: 1, col: 2, diag: null },
+		{ token: null, element: null, row: 2, col: 0, diag: 2 },
+		{ token: null, element: null, row: 2, col: 1, diag: null },
+		{ token: null, element: null, row: 2, col: 2, diag: 0 },
+	];
 
 	let _isPlayer1Turn = true;
 	let _player1;
@@ -12,8 +22,12 @@ const game = (() => {
 		return { name, isHuman, score };
 	};
 
-	const _checkForWin = (rowChoice, colChoice) => {
+	const _checkForWin = (rowChoice) => {
 		const currentToken = _isPlayer1Turn ? "X" : "O";
+
+		let selectedRow = 0;
+		let selectedCol = 0;
+		let selectedDiag = 0;
 
 		const isRowWin =
 			_board[rowChoice].filter((row) => row === currentToken).length === 3;
@@ -25,26 +39,16 @@ const game = (() => {
 		let isDiagonal1Win = false;
 		let isDiagonal2Win = false;
 
-		if (
-			(rowChoice === 0 && colChoice === 0) ||
-			(rowChoice === 1 && colChoice === 1) ||
-			(rowChoice === 2 && colChoice === 2)
-		) {
+		if (rowChoice === 0 || rowChoice === 1 || rowChoice === 2) {
 			isDiagonal1Win =
-				[_board[0][0], _board[1][1], _board[2][2]].filter(
-					(diag) => diag === currentToken
-				).length === 3;
+				[_board[0], _board[1], _board[2]].filter((diag) => diag === currentToken)
+					.length === 3;
 		}
 
-		if (
-			(rowChoice === 2 && colChoice === 0) ||
-			(rowChoice === 1 && colChoice === 1) ||
-			(rowChoice === 0 && colChoice === 2)
-		) {
+		if (rowChoice === 2 || rowChoice === 1 || rowChoice === 0) {
 			isDiagonal2Win =
-				[_board[2][0], _board[1][1], _board[0][2]].filter(
-					(diag) => diag === currentToken
-				).length === 3;
+				[_board[2], _board[1], _board[0]].filter((diag) => diag === currentToken)
+					.length === 3;
 		}
 
 		return isRowWin || isColWin || isDiagonal1Win || isDiagonal2Win;
@@ -62,11 +66,11 @@ const game = (() => {
 		}
 	};
 
-	const _updateBoard = (rowChoice, colChoice) => {
-		if (_board[rowChoice][colChoice] !== null) {
+	const _updateBoard = (rowChoice) => {
+		if (_board[rowChoice] !== null) {
 			return "Invalid choice.";
 		} else {
-			_board[rowChoice][colChoice] = _isPlayer1Turn ? "X" : "O";
+			_board[rowChoice] = _isPlayer1Turn ? "X" : "O";
 			return _board;
 		}
 	};
@@ -82,31 +86,31 @@ const game = (() => {
 		};
 	};
 
-	const divs = document.querySelectorAll(".board-spot");
-	const array = [];
+	const boardSpots = document.querySelectorAll(".board-spot");
 
 	function enableBoard() {
-		divs.forEach((div) => {
-			div.addEventListener("click", _placeToken);
-			array.push(div);
+		boardSpots.forEach((spot, index) => {
+			spot.addEventListener("click", _placeToken);
+			_board[index].element = spot;
 		});
 	}
 
 	function _placeToken(e) {
-		const selection = array.indexOf(e.target);
+		const selection = _board.map((slot) => slot.element).indexOf(e.target);
+		console.log(selection);
 		const currentToken = _isPlayer1Turn ? "X" : "O";
 		const srcImg = _isPlayer1Turn ? "./img/x.png" : "./img/o.png";
 		const img = document.createElement("img");
 		img.setAttribute("alt", currentToken);
 		img.setAttribute("src", srcImg);
 
-		_board[selection] = currentToken;
+		_board[selection].token = currentToken;
 		e.target.appendChild(img);
 		e.target.removeEventListener("click", _placeToken);
 		_isPlayer1Turn = !_isPlayer1Turn;
 	}
 
-	return { newPlayer, processChoice, enableBoard };
+	return { newPlayer, processChoice, enableBoard, _board };
 })();
 
 game.enableBoard();
