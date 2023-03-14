@@ -12,8 +12,8 @@ const game = (() => {
 	];
 
 	let _isPlayer1Turn = true;
-	let _player1;
-	let _player2;
+	let _player1 = null;
+	let _player2 = null;
 
 	const _playerFactory = (newName, isPlayerHuman = true) => {
 		const name = newName;
@@ -55,10 +55,10 @@ const game = (() => {
 	};
 
 	const newPlayer = (playerName) => {
-		if (_player1 === undefined) {
+		if (_player1 === null) {
 			_player1 = _playerFactory(playerName);
 			return `${playerName} is player 1.`;
-		} else if (_player2 === undefined) {
+		} else if (_player2 === null) {
 			_player2 = _playerFactory(playerName);
 			return `${playerName} is player 2.`;
 		} else {
@@ -97,7 +97,6 @@ const game = (() => {
 
 	const _placeToken = (e) => {
 		const selection = _board.map((slot) => slot.element).indexOf(e.target);
-		console.log(selection);
 		const currentToken = _isPlayer1Turn ? "X" : "O";
 		const srcImg = _isPlayer1Turn ? "./img/x.png" : "./img/o.png";
 		const img = document.createElement("img");
@@ -110,7 +109,24 @@ const game = (() => {
 		_isPlayer1Turn = !_isPlayer1Turn;
 	};
 
-	return { newPlayer, processChoice, enableBoard, _board };
+	const startGame = () => {
+		_reset();
+	};
+
+	const _reset = () => {
+		_player1 = null;
+		_player2 = null;
+
+		_board.forEach((slot) => {
+			slot.token = null;
+			slot.element.replaceChildren();
+			slot.element.addEventListener("click", _placeToken);
+		});
+	};
+
+	return { newPlayer, processChoice, enableBoard, _board, startGame };
 })();
 
 game.enableBoard();
+
+//game._board.filter(slot => slot.row === 0).map(slot => slot.token)
