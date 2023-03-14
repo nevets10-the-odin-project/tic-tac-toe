@@ -11,8 +11,8 @@ const game = (() => {
 		{ token: null, element: null, row: 2, col: 2, diag: 0 },
 	];
 
-	const boardSpots = document.querySelectorAll(".board-spot");
-	boardSpots.forEach((spot, index) => {
+	const _boardSpots = document.querySelectorAll(".board-spot");
+	_boardSpots.forEach((spot, index) => {
 		_board[index].element = spot;
 	});
 
