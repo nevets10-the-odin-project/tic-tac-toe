@@ -111,6 +111,7 @@ const game = (() => {
 	};
 
 	const _reset = () => {
+		_isPlayer1Turn = true;
 		_player1 = null;
 		_player2 = null;
 
