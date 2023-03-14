@@ -11,6 +11,11 @@ const game = (() => {
 		{ token: null, element: null, row: 2, col: 2, diag: 0 },
 	];
 
+	const boardSpots = document.querySelectorAll(".board-spot");
+	boardSpots.forEach((spot, index) => {
+		_board[index].element = spot;
+	});
+
 	let _isPlayer1Turn = true;
 	let _player1 = null;
 	let _player2 = null;
@@ -75,37 +80,27 @@ const game = (() => {
 		}
 	};
 
-	const processChoice = (rowChoice, colChoice) => {
-		const updatedBoard = _updateBoard(rowChoice, colChoice);
-		const hasWon = _checkForWin(rowChoice, colChoice);
+	const _processChoice = (e) => {
+		const slotIndex = _board.map((slot) => slot.element).indexOf(e.target);
+		const currentToken = _isPlayer1Turn ? "X" : "O";
+		_placeToken(currentToken, slotIndex);
+		//const updatedBoard = _updateBoard(rowChoice, colChoice);
+		//const hasWon = _checkForWin(rowChoice, colChoice);
+		//_board[slotIndex].token = currentToken;
 		_isPlayer1Turn = !_isPlayer1Turn;
 
 		return {
-			updatedBoard,
-			hasWon,
+			//updatedBoard,
+			//hasWon,
 		};
 	};
 
-	const boardSpots = document.querySelectorAll(".board-spot");
-
-	const initializeBoard = () => {
-		boardSpots.forEach((spot, index) => {
-			_board[index].element = spot;
-		});
-	};
-
-	const _placeToken = (e) => {
-		const selection = _board.map((slot) => slot.element).indexOf(e.target);
-		const currentToken = _isPlayer1Turn ? "X" : "O";
-		const srcImg = _isPlayer1Turn ? "./img/X.png" : "./img/O.png";
+	const _placeToken = (currentToken, slotIndex) => {
 		const img = document.createElement("img");
 		img.setAttribute("alt", currentToken);
-		img.setAttribute("src", srcImg);
-
-		_board[selection].token = currentToken;
-		e.target.appendChild(img);
-		e.target.removeEventListener("click", _placeToken);
-		_isPlayer1Turn = !_isPlayer1Turn;
+		img.setAttribute("src", `./img/${currentToken}.png`);
+		_board[slotIndex].element.appendChild(img);
+		_board[slotIndex].element.removeEventListener("click", _processChoice);
 	};
 
 	const startGame = () => {
@@ -119,14 +114,13 @@ const game = (() => {
 		_board.forEach((slot) => {
 			slot.token = null;
 			slot.element.replaceChildren();
-			slot.element.addEventListener("click", _placeToken);
+			slot.element.addEventListener("click", _processChoice);
 		});
 	};
 
-	return { newPlayer, processChoice, initializeBoard, _board, startGame };
+	return { newPlayer, _board, startGame };
 })();
 
-game.initializeBoard();
 game.startGame();
 
 //game._board.filter(slot => slot.row === 0).map(slot => slot.token)
