@@ -71,12 +71,11 @@ const game = (() => {
 		}
 	};
 
-	const _updateBoard = (rowChoice) => {
-		if (_board[rowChoice] !== null) {
-			return "Invalid choice.";
+	const _updateBoard = (currentToken, slotIndex) => {
+		if (_board[slotIndex].token !== null) {
+			return;
 		} else {
-			_board[rowChoice] = _isPlayer1Turn ? "X" : "O";
-			return _board;
+			_board[slotIndex].token = currentToken;
 		}
 	};
 
@@ -84,7 +83,7 @@ const game = (() => {
 		const slotIndex = _board.map((slot) => slot.element).indexOf(e.target);
 		const currentToken = _isPlayer1Turn ? "X" : "O";
 		_placeToken(currentToken, slotIndex);
-		//const updatedBoard = _updateBoard(rowChoice, colChoice);
+		_updateBoard(currentToken, slotIndex);
 		//const hasWon = _checkForWin(rowChoice, colChoice);
 		//_board[slotIndex].token = currentToken;
 		_isPlayer1Turn = !_isPlayer1Turn;
