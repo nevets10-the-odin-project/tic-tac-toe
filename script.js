@@ -1,9 +1,5 @@
 const game = (() => {
-	const _board = [
-		[null, null, null],
-		[null, null, null],
-		[null, null, null],
-	];
+	const _board = [null, null, null, null, null, null, null, null, null];
 
 	let _isPlayer1Turn = true;
 	let _player1;
@@ -86,5 +82,31 @@ const game = (() => {
 		};
 	};
 
-	return { newPlayer, processChoice };
+	const divs = document.querySelectorAll(".board-spot");
+	const array = [];
+
+	function enableBoard() {
+		divs.forEach((div) => {
+			div.addEventListener("click", _placeToken);
+			array.push(div);
+		});
+	}
+
+	function _placeToken(e) {
+		const selection = array.indexOf(e.target);
+		const currentToken = _isPlayer1Turn ? "X" : "O";
+		const srcImg = _isPlayer1Turn ? "./img/x.png" : "./img/o.png";
+		const img = document.createElement("img");
+		img.setAttribute("alt", currentToken);
+		img.setAttribute("src", srcImg);
+
+		_board[selection] = currentToken;
+		e.target.appendChild(img);
+		e.target.removeEventListener("click", _placeToken);
+		_isPlayer1Turn = !_isPlayer1Turn;
+	}
+
+	return { newPlayer, processChoice, enableBoard };
 })();
+
+game.enableBoard();
