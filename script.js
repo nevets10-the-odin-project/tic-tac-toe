@@ -97,7 +97,7 @@ const game = (() => {
 	const _placeToken = (e) => {
 		const selection = _board.map((slot) => slot.element).indexOf(e.target);
 		const currentToken = _isPlayer1Turn ? "X" : "O";
-		const srcImg = _isPlayer1Turn ? "./img/x.png" : "./img/o.png";
+		const srcImg = _isPlayer1Turn ? "./img/X.png" : "./img/O.png";
 		const img = document.createElement("img");
 		img.setAttribute("alt", currentToken);
 		img.setAttribute("src", srcImg);
