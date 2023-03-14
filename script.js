@@ -27,36 +27,40 @@ const game = (() => {
 		return { name, isHuman, score };
 	};
 
-	const _checkForWin = (rowChoice) => {
-		const currentToken = _isPlayer1Turn ? "X" : "O";
-
-		let selectedRow = 0;
-		let selectedCol = 0;
-		let selectedDiag = 0;
+	const _checkForWin = (currentToken, slotIndex) => {
+		const currentSlot = _board[slotIndex];
 
 		const isRowWin =
-			_board[rowChoice].filter((row) => row === currentToken).length === 3;
+			_board
+				.filter((slot) => slot.row === currentSlot.row)
+				.map((slot) => slot.token)
+				.filter((token) => token === currentToken).length === 3;
 
 		const isColWin =
-			_board.map((row) => row[colChoice]).filter((col) => col === currentToken)
-				.length === 3;
+			_board
+				.filter((slot) => slot.col === currentSlot.col)
+				.map((slot) => slot.token)
+				.filter((token) => token === currentToken).length === 3;
 
-		let isDiagonal1Win = false;
-		let isDiagonal2Win = false;
+		let isDiagonalWin = false;
 
-		if (rowChoice === 0 || rowChoice === 1 || rowChoice === 2) {
-			isDiagonal1Win =
-				[_board[0], _board[1], _board[2]].filter((diag) => diag === currentToken)
-					.length === 3;
+		if (currentSlot.diag !== null) {
+			if (currentSlot.diag >= 1) {
+				isDiagonalWin =
+					_board
+						.filter((slot) => slot.diag >= 1)
+						.map((slot) => slot.token)
+						.filter((token) => token === currentToken).length === 3;
+			} else if (currentSlot.diag <= 1) {
+				isDiagonalWin =
+					_board
+						.filter((slot) => slot.diag <= 1)
+						.map((slot) => slot.token)
+						.filter((token) => token === currentToken).length === 3;
+			}
 		}
 
-		if (rowChoice === 2 || rowChoice === 1 || rowChoice === 0) {
-			isDiagonal2Win =
-				[_board[2], _board[1], _board[0]].filter((diag) => diag === currentToken)
-					.length === 3;
-		}
-
-		return isRowWin || isColWin || isDiagonal1Win || isDiagonal2Win;
+		return isRowWin || isColWin || isDiagonalWin;
 	};
 
 	const newPlayer = (playerName) => {
@@ -84,7 +88,7 @@ const game = (() => {
 		const currentToken = _isPlayer1Turn ? "X" : "O";
 		_placeToken(currentToken, slotIndex);
 		_updateBoard(currentToken, slotIndex);
-		//const hasWon = _checkForWin(rowChoice, colChoice);
+		_checkForWin(currentToken, slotIndex);
 		//_board[slotIndex].token = currentToken;
 		_isPlayer1Turn = !_isPlayer1Turn;
 
@@ -121,5 +125,3 @@ const game = (() => {
 })();
 
 game.startGame();
-
-//game._board.filter(slot => slot.row === 0).map(slot => slot.token)
