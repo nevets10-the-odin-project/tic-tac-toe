@@ -88,14 +88,14 @@ const game = (() => {
 
 	const boardSpots = document.querySelectorAll(".board-spot");
 
-	function enableBoard() {
+	const enableBoard = () => {
 		boardSpots.forEach((spot, index) => {
 			spot.addEventListener("click", _placeToken);
 			_board[index].element = spot;
 		});
-	}
+	};
 
-	function _placeToken(e) {
+	const _placeToken = (e) => {
 		const selection = _board.map((slot) => slot.element).indexOf(e.target);
 		console.log(selection);
 		const currentToken = _isPlayer1Turn ? "X" : "O";
@@ -108,7 +108,7 @@ const game = (() => {
 		e.target.appendChild(img);
 		e.target.removeEventListener("click", _placeToken);
 		_isPlayer1Turn = !_isPlayer1Turn;
-	}
+	};
 
 	return { newPlayer, processChoice, enableBoard, _board };
 })();
