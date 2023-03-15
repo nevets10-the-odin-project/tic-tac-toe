@@ -45,7 +45,7 @@ const game = (() => {
 
 		let isDiagonalWin = false;
 
-		if (currentSlot.diag !== null) {
+		if (currentSlot.diag !== NaN) {
 			if (currentSlot.diag >= 1) {
 				isDiagonalWin =
 					_board
