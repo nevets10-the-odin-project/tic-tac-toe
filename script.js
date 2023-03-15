@@ -11,6 +11,7 @@ const game = (() => {
 		{ token: null, element: null, row: 2, col: 2, diag: 0 },
 	];
 
+	const _statusDisplay = document.querySelector(".status-display");
 	const _boardSpots = document.querySelectorAll(".board-spot");
 	_boardSpots.forEach((spot, index) => {
 		_board[index].element = spot;
@@ -83,13 +84,19 @@ const game = (() => {
 		}
 	};
 
+	const _updateStatus = (status) => {
+		_statusDisplay.textContent = status;
+	};
+
 	const _processChoice = (e) => {
 		const slotIndex = _board.map((slot) => slot.element).indexOf(e.target);
 		const currentToken = _isPlayer1Turn ? "X" : "O";
 		_placeToken(currentToken, slotIndex);
 		_updateBoard(currentToken, slotIndex);
 		if (_checkForWin(currentToken, slotIndex)) {
-			alert(`Player ${_isPlayer1Turn ? "1" : "2"} won!`);
+			_updateStatus(`Player ${_isPlayer1Turn ? "1" : "2"} won!`);
+		} else {
+			_updateStatus(`Player ${_isPlayer1Turn ? "2's" : "1's"} turn.`);
 		}
 		//_board[slotIndex].token = currentToken;
 		_isPlayer1Turn = !_isPlayer1Turn;
