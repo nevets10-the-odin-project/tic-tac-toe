@@ -1,13 +1,13 @@
 const game = (() => {
 	const _board = [
 		{ token: null, element: null, row: 0, col: 0, diag: 0 },
-		{ token: null, element: null, row: 0, col: 1, diag: null },
+		{ token: null, element: null, row: 0, col: 1, diag: NaN },
 		{ token: null, element: null, row: 0, col: 2, diag: 2 },
-		{ token: null, element: null, row: 1, col: 0, diag: null },
+		{ token: null, element: null, row: 1, col: 0, diag: NaN },
 		{ token: null, element: null, row: 1, col: 1, diag: 1 },
-		{ token: null, element: null, row: 1, col: 2, diag: null },
+		{ token: null, element: null, row: 1, col: 2, diag: NaN },
 		{ token: null, element: null, row: 2, col: 0, diag: 2 },
-		{ token: null, element: null, row: 2, col: 1, diag: null },
+		{ token: null, element: null, row: 2, col: 1, diag: NaN },
 		{ token: null, element: null, row: 2, col: 2, diag: 0 },
 	];
 
