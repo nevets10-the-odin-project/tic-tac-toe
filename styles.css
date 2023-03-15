@@ -12,9 +12,22 @@ body {
 	color: #ffffff;
 	height: 100vh;
 	display: flex;
+	flex-direction: column;
+	justify-content: space-around;
+	font-size: 1.6rem;
+}
+
+.status-display {
+	align-self: center;
+	margin-top: 8rem;
+	font-size: 4rem;
+}
+
+.main {
+	flex: 1;
+	display: flex;
 	justify-content: space-around;
 	align-items: center;
-	font-size: 1.6rem;
 }
 
 img {
