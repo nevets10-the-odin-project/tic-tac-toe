@@ -17,6 +17,14 @@ body {
 	font-size: 1.6rem;
 }
 
+header {
+	display: flex;
+	align-items: center;
+	gap: 2.6rem;
+	background-color: #333333;
+	padding: 1rem;
+}
+
 .status-display {
 	align-self: center;
 	margin-top: 8rem;
