@@ -25,6 +25,12 @@ header {
 	padding: 1rem;
 }
 
+.reset {
+	font-size: 1.6rem;
+	font-weight: bold;
+	padding: 0.4rem 0.8rem;
+}
+
 .status-display {
 	align-self: center;
 	margin-top: 8rem;
