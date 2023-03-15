@@ -132,6 +132,9 @@ const game = (() => {
 		});
 	};
 
+	const _resetButton = document.querySelector(".reset");
+	_resetButton.addEventListener("click", _reset);
+
 	const _endGame = () => {
 		_board.forEach((slot) => {
 			slot.element.removeEventListener("click", _processChoice);
