@@ -95,6 +95,7 @@ const game = (() => {
 		_updateBoard(currentToken, slotIndex);
 		if (_checkForWin(currentToken, slotIndex)) {
 			_updateStatus(`Player ${_isPlayer1Turn ? "1" : "2"} won!`);
+			_endGame();
 		} else {
 			_updateStatus(`Player ${_isPlayer1Turn ? "2's" : "1's"} turn.`);
 		}
@@ -128,6 +129,12 @@ const game = (() => {
 			slot.token = null;
 			slot.element.replaceChildren();
 			slot.element.addEventListener("click", _processChoice);
+		});
+	};
+
+	const _endGame = () => {
+		_board.forEach((slot) => {
+			slot.element.removeEventListener("click", _processChoice);
 		});
 	};
 
