@@ -88,7 +88,9 @@ const game = (() => {
 		const currentToken = _isPlayer1Turn ? "X" : "O";
 		_placeToken(currentToken, slotIndex);
 		_updateBoard(currentToken, slotIndex);
-		_checkForWin(currentToken, slotIndex);
+		if (_checkForWin(currentToken, slotIndex)) {
+			alert(`Player ${_isPlayer1Turn ? "1" : "2"} won!`);
+		}
 		//_board[slotIndex].token = currentToken;
 		_isPlayer1Turn = !_isPlayer1Turn;
 
