@@ -21,9 +21,38 @@
 				three-by-three grid with X or O. The player who succeeds in placing three of
 				their marks in a horizontal, vertical, or diagonal row is the winner.
 			</p>
-			<button class="play">Play</button>
+			<button class="continue">Continue</button>
 		</div>
-		<div class="player-setup hidden"></div>
+		<form class="player-setup">
+			<h3>Player Setup</h3>
+			<div class="player-count">
+				<label>
+					<input type="radio" name="player_count" value="1" checked />
+					<div>
+						<img src="./img/one_player.png" alt="one player" />
+						<p>One player</p>
+					</div>
+				</label>
+				<label>
+					<input type="radio" name="player_count" value="2" />
+					<div>
+						<img src="./img/two_player.png" alt="two players" />
+						<p>Two players</p>
+					</div>
+				</label>
+			</div>
+			<div class="player-names">
+				<div class="player-one-name">
+					<label for="player_one">Player One's Name</label>
+					<input type="text" name="player_one" id="player_one" />
+				</div>
+				<div class="player-two-name">
+					<label for="player_two">Player Two's Name</label>
+					<input type="text" name="player_two" id="player_two" />
+				</div>
+			</div>
+			<button id="start_game" type="submit">Play</button>
+		</form>
 		<div class="main hidden">
 			<div class="player one">
 				<h2>Nevets</h2>
