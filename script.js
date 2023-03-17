@@ -11,11 +11,25 @@ const game = (() => {
 		{ token: null, element: null, row: 2, col: 2, diag: 0 },
 	];
 
+	const _playerSetupDiv = document.querySelector(".player-setup");
 	const _statusDisplay = document.querySelector(".status-display");
 	const _boardSpots = document.querySelectorAll(".board-spot");
 	_boardSpots.forEach((spot, index) => {
 		_board[index].element = spot;
 	});
+
+	const _continueBtn = document.querySelector(".continue");
+	_continueBtn.addEventListener("click", _howToContinue);
+
+	function _howToContinue() {
+		const howToDiv = document.querySelector(".how-to");
+		howToDiv.classList.add("hidden");
+		_togglePlayerSelect();
+	}
+
+	function _togglePlayerSelect() {
+		_playerSetupDiv.classList.toggle("hidden");
+	}
 
 	let _isPlayer1Turn = true;
 	let _player1 = null;
