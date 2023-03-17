@@ -17,7 +17,6 @@ const game = (() => {
 		_board[index].element = slot;
 	});
 
-	const _playerSetupDiv = document.querySelector(".player-setup");
 	const _toggleVisibility = (className) => {
 		const element = document.querySelector(`.${className}`);
 		element.classList.toggle("hidden");
