@@ -12,9 +12,9 @@ const game = (() => {
 	];
 
 	const _statusDisplay = document.querySelector(".status-display");
-	const _boardSpots = document.querySelectorAll(".board-spot");
-	_boardSpots.forEach((spot, index) => {
-		_board[index].element = spot;
+	const _boardSlots = document.querySelectorAll(".board-slot");
+	_boardSlots.forEach((slot, index) => {
+		_board[index].element = slot;
 	});
 
 	const _playerSetupDiv = document.querySelector(".player-setup");
