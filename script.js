@@ -18,18 +18,18 @@ const game = (() => {
 		_board[index].element = spot;
 	});
 
-	const _continueBtn = document.querySelector(".continue");
-	_continueBtn.addEventListener("click", _howToContinue);
+	const _togglePlayerSelect = () => {
+		_playerSetupDiv.classList.toggle("hidden");
+	};
 
-	function _howToContinue() {
+	const _howToContinue = () => {
 		const howToDiv = document.querySelector(".how-to");
 		howToDiv.classList.add("hidden");
 		_togglePlayerSelect();
-	}
+	};
 
-	function _togglePlayerSelect() {
-		_playerSetupDiv.classList.toggle("hidden");
-	}
+	const _continueBtn = document.querySelector(".continue");
+	_continueBtn.addEventListener("click", _howToContinue);
 
 	let _isPlayer1Turn = true;
 	let _player1 = null;
