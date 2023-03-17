@@ -18,8 +18,9 @@ const game = (() => {
 	});
 
 	const _playerSetupDiv = document.querySelector(".player-setup");
-	const _togglePlayerSelect = () => {
-		_playerSetupDiv.classList.toggle("hidden");
+	const _toggleVisibility = (className) => {
+		const element = document.querySelector(`.${className}`);
+		element.classList.toggle("hidden");
 	};
 
 	let _isPlayer1Turn = true;
@@ -122,7 +123,7 @@ const game = (() => {
 	};
 
 	const startGame = () => {
-		_togglePlayerSelect();
+		_toggleVisibility("player-setup");
 		_reset();
 	};
 
@@ -150,7 +151,7 @@ const game = (() => {
 	const _howToContinue = () => {
 		const howToDiv = document.querySelector(".how-to");
 		howToDiv.classList.add("hidden");
-		_togglePlayerSelect();
+		_toggleVisibility("player-setup");
 	};
 
 	const _continueBtn = document.querySelector(".continue");
