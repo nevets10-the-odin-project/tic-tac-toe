@@ -125,6 +125,7 @@ const game = (() => {
 	const startGame = () => {
 		_toggleVisibility("player-setup");
 		_reset();
+		_toggleVisibility("main");
 	};
 
 	const _reset = () => {
