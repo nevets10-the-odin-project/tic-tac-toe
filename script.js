@@ -123,8 +123,8 @@ const game = (() => {
 	};
 
 	const startGame = () => {
-		_toggleVisibility("player-setup");
 		_reset();
+		_toggleVisibility("player-setup");
 		_toggleVisibility("main");
 	};
 
