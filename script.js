@@ -121,7 +121,9 @@ const game = (() => {
 		_board[slotIndex].element.removeEventListener("click", _processChoice);
 	};
 
-	const startGame = () => {
+	const startGame = (e) => {
+		e.preventDefault();
+		console.log(e.target);
 		_reset();
 		_toggleVisibility("player-setup");
 		_toggleVisibility("status-display");
@@ -160,8 +162,8 @@ const game = (() => {
 	const _continueBtn = document.querySelector(".continue");
 	_continueBtn.addEventListener("click", _howToContinue);
 
-	const _playBtn = document.getElementById("start_game");
-	_playBtn.addEventListener("click", startGame);
+	const _playerSetupForm = document.querySelector(".player-setup");
+	_playerSetupForm.addEventListener("submit", startGame);
 
 	return { newPlayer, _board, startGame };
 })();
