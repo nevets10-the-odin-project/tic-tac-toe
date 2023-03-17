@@ -125,6 +125,7 @@ const game = (() => {
 	const startGame = () => {
 		_reset();
 		_toggleVisibility("player-setup");
+		_toggleVisibility("status-display");
 		_toggleVisibility("main");
 	};
 
@@ -132,6 +133,8 @@ const game = (() => {
 		_isPlayer1Turn = true;
 		_player1 = null;
 		_player2 = null;
+
+		_updateStatus("Player 1's turn.");
 
 		_board.forEach((slot) => {
 			slot.token = null;
