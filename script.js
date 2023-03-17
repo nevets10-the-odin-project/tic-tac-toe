@@ -69,15 +69,13 @@ const game = (() => {
 		return isRowWin || isColWin || isDiagonalWin;
 	};
 
-	const newPlayer = (playerName) => {
-		if (_player1 === null) {
-			_player1 = _playerFactory(playerName);
-			return `${playerName} is player 1.`;
-		} else if (_player2 === null) {
-			_player2 = _playerFactory(playerName);
-			return `${playerName} is player 2.`;
+	const _setPlayers = (playerForm) => {
+		if (playerForm.player_count.value === "1") {
+			_player1 = _playerFactory(playerForm.player_one.value);
+			_player2 = _playerFactory(playerForm.player_two.value, false);
 		} else {
-			return "Players already set.";
+			_player1 = _playerFactory(playerForm.player_one.value);
+			_player2 = _playerFactory(playerForm.player_two.value);
 		}
 	};
 
@@ -123,7 +121,7 @@ const game = (() => {
 
 	const startGame = (e) => {
 		e.preventDefault();
-		console.log(e.target);
+		_setPlayers(e.target);
 		_reset();
 		_toggleVisibility("player-setup");
 		_toggleVisibility("status-display");
@@ -165,7 +163,7 @@ const game = (() => {
 	const _playerSetupForm = document.querySelector(".player-setup");
 	_playerSetupForm.addEventListener("submit", startGame);
 
-	return { newPlayer, _board, startGame };
+	return { _setPlayers, _board, startGame };
 })();
 
 //game.startGame();
