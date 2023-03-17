@@ -11,25 +11,16 @@ const game = (() => {
 		{ token: null, element: null, row: 2, col: 2, diag: 0 },
 	];
 
-	const _playerSetupDiv = document.querySelector(".player-setup");
 	const _statusDisplay = document.querySelector(".status-display");
 	const _boardSpots = document.querySelectorAll(".board-spot");
 	_boardSpots.forEach((spot, index) => {
 		_board[index].element = spot;
 	});
 
+	const _playerSetupDiv = document.querySelector(".player-setup");
 	const _togglePlayerSelect = () => {
 		_playerSetupDiv.classList.toggle("hidden");
 	};
-
-	const _howToContinue = () => {
-		const howToDiv = document.querySelector(".how-to");
-		howToDiv.classList.add("hidden");
-		_togglePlayerSelect();
-	};
-
-	const _continueBtn = document.querySelector(".continue");
-	_continueBtn.addEventListener("click", _howToContinue);
 
 	let _isPlayer1Turn = true;
 	let _player1 = null;
@@ -131,6 +122,7 @@ const game = (() => {
 	};
 
 	const startGame = () => {
+		_togglePlayerSelect();
 		_reset();
 	};
 
@@ -155,7 +147,19 @@ const game = (() => {
 		});
 	};
 
+	const _howToContinue = () => {
+		const howToDiv = document.querySelector(".how-to");
+		howToDiv.classList.add("hidden");
+		_togglePlayerSelect();
+	};
+
+	const _continueBtn = document.querySelector(".continue");
+	_continueBtn.addEventListener("click", _howToContinue);
+
+	const _playBtn = document.getElementById("start_game");
+	_playBtn.addEventListener("click", startGame);
+
 	return { newPlayer, _board, startGame };
 })();
 
-game.startGame();
+//game.startGame();
