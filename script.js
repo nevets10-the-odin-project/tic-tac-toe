@@ -104,10 +104,10 @@ const game = (() => {
 		_placeToken(currentToken, slotIndex);
 		_updateBoard(currentToken, slotIndex);
 		if (_checkForWin(currentToken, slotIndex)) {
-			_updateStatus(`Player ${_isPlayer1Turn ? "1" : "2"} won!`);
+			_updateStatus(`${_isPlayer1Turn ? _player1.name : _player2.name} won!`);
 			_endGame();
 		} else {
-			_updateStatus(`Player ${_isPlayer1Turn ? "2's" : "1's"} turn.`);
+			_updateStatus(`${_isPlayer1Turn ? _player2.name : _player1.name}'s turn.`);
 		}
 		//_board[slotIndex].token = currentToken;
 		_isPlayer1Turn = !_isPlayer1Turn;
@@ -138,10 +138,8 @@ const game = (() => {
 
 	const _reset = () => {
 		_isPlayer1Turn = true;
-		_player1 = null;
-		_player2 = null;
 
-		_updateStatus("Player 1's turn.");
+		_updateStatus(`${_player1.name}'s turn`);
 
 		_board.forEach((slot) => {
 			slot.token = null;
