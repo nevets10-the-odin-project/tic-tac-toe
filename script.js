@@ -81,7 +81,6 @@ const game = (() => {
 
 	const _updatePlayerNames = () => {
 		const playerNames = document.querySelectorAll(".player h2");
-		console.table(playerNames);
 		playerNames[0].textContent = _player1.name;
 		playerNames[1].textContent = _player2.name;
 	};
@@ -128,24 +127,25 @@ const game = (() => {
 
 	const startGame = (e) => {
 		e.preventDefault();
+		_isPlayer1Turn = true;
+		_board.forEach((slot) => {
+			slot.token = null;
+			slot.element.replaceChildren();
+			slot.element.addEventListener("click", _processChoice);
+		});
+
 		_setPlayers(e.target);
 		_updatePlayerNames();
-		_reset();
+		_updateStatus(`${_player1.name}'s turn`);
 		_toggleVisibility("player-setup");
 		_toggleVisibility("status-display");
 		_toggleVisibility("main");
 	};
 
 	const _reset = () => {
-		_isPlayer1Turn = true;
-
-		_updateStatus(`${_player1.name}'s turn`);
-
-		_board.forEach((slot) => {
-			slot.token = null;
-			slot.element.replaceChildren();
-			slot.element.addEventListener("click", _processChoice);
-		});
+		_toggleVisibility("player-setup");
+		_toggleVisibility("status-display");
+		_toggleVisibility("main");
 	};
 
 	const _resetButton = document.querySelector(".reset");
