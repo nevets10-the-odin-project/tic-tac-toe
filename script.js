@@ -125,18 +125,24 @@ const game = (() => {
 		_board[slotIndex].element.removeEventListener("click", _processChoice);
 	};
 
-	const startGame = (e) => {
-		e.preventDefault();
+	const _newRound = () => {
 		_isPlayer1Turn = true;
+		_updateStatus(`${_player1.name}'s turn`);
 		_board.forEach((slot) => {
 			slot.token = null;
 			slot.element.replaceChildren();
 			slot.element.addEventListener("click", _processChoice);
 		});
+	};
 
+	const _newRoundBtn = document.querySelector(".new-round");
+	_newRoundBtn.addEventListener("click", _newRound);
+
+	const startGame = (e) => {
+		e.preventDefault();
 		_setPlayers(e.target);
 		_updatePlayerNames();
-		_updateStatus(`${_player1.name}'s turn`);
+		_newRound();
 		_toggleVisibility("player-setup");
 		_toggleVisibility("status-display");
 		_toggleVisibility("main");
