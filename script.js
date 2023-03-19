@@ -24,7 +24,15 @@ const game = (() => {
 			_playerNames[1].textContent = _player2.name;
 		};
 
-		return { toggleVisibility, updatePlayerNames };
+		const placeToken = (currentToken, slotIndex) => {
+			const img = document.createElement("img");
+			img.setAttribute("alt", currentToken);
+			img.setAttribute("src", `./img/${currentToken}.png`);
+			_board[slotIndex].element.appendChild(img);
+			_board[slotIndex].element.removeEventListener("click", _processChoice);
+		};
+
+		return { toggleVisibility, updatePlayerNames, placeToken };
 	})();
 
 	const _statusDisplay = document.querySelector(".status-display");
@@ -105,7 +113,7 @@ const game = (() => {
 	const _processChoice = (e) => {
 		const slotIndex = _board.map((slot) => slot.element).indexOf(e.target);
 		const currentToken = _isPlayer1Turn ? "X" : "O";
-		_placeToken(currentToken, slotIndex);
+		_DOMControl.placeToken(currentToken, slotIndex);
 		_updateBoard(currentToken, slotIndex);
 		if (_checkForWin(currentToken, slotIndex)) {
 			_updateStatus(`${_isPlayer1Turn ? _player1.name : _player2.name} won!`);
@@ -120,14 +128,6 @@ const game = (() => {
 			//updatedBoard,
 			//hasWon,
 		};
-	};
-
-	const _placeToken = (currentToken, slotIndex) => {
-		const img = document.createElement("img");
-		img.setAttribute("alt", currentToken);
-		img.setAttribute("src", `./img/${currentToken}.png`);
-		_board[slotIndex].element.appendChild(img);
-		_board[slotIndex].element.removeEventListener("click", _processChoice);
 	};
 
 	const _newRound = () => {
