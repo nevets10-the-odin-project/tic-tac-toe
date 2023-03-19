@@ -12,9 +12,14 @@ const game = (() => {
 	];
 
 	const _DOMControl = (() => {
-		const toggleVisibility = (className) => {
+		const hide = (className) => {
 			const element = document.querySelector(`.${className}`);
-			element.classList.toggle("hidden");
+			element.classList.add("hidden");
+		};
+
+		const show = (className) => {
+			const element = document.querySelector(`.${className}`);
+			element.classList.remove("hidden");
 		};
 
 		const _playerNames = document.querySelectorAll(".player h2");
@@ -38,7 +43,7 @@ const game = (() => {
 			_statusDisplay.textContent = status;
 		};
 
-		return { toggleVisibility, updatePlayerNames, placeToken, updateStatus };
+		return { hide, show, updatePlayerNames, placeToken, updateStatus };
 	})();
 
 	const _boardSlots = document.querySelectorAll(".board-slot");
@@ -100,8 +105,6 @@ const game = (() => {
 		} else {
 			_player2 = _playerFactory(playerForm.player_two.value);
 		}
-
-		console.log(_player2);
 	};
 
 	const _updateBoard = (currentToken, slotIndex) => {
@@ -154,15 +157,15 @@ const game = (() => {
 		_setPlayers(e.target);
 		_DOMControl.updatePlayerNames();
 		_newRound();
-		_DOMControl.toggleVisibility("player-setup");
-		_DOMControl.toggleVisibility("status-display");
-		_DOMControl.toggleVisibility("main");
+		_DOMControl.hide("player-setup");
+		_DOMControl.show("status-display");
+		_DOMControl.show("main");
 	};
 
 	const _reset = () => {
-		_DOMControl.toggleVisibility("player-setup");
-		_DOMControl.toggleVisibility("status-display");
-		_DOMControl.toggleVisibility("main");
+		_DOMControl.show("player-setup");
+		_DOMControl.hide("status-display");
+		_DOMControl.hide("main");
 	};
 
 	const _resetButton = document.querySelector(".reset");
@@ -175,9 +178,8 @@ const game = (() => {
 	};
 
 	const _howToContinue = () => {
-		const howToDiv = document.querySelector(".how-to");
-		howToDiv.classList.add("hidden");
-		_DOMControl.toggleVisibility("player-setup");
+		_DOMControl.hide("how-to");
+		_DOMControl.show("player-setup");
 	};
 
 	const _continueBtn = document.querySelector(".continue");
