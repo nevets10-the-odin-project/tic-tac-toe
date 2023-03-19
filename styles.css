@@ -10,7 +10,6 @@
 body {
 	background-color: #1e1e1e;
 	color: #ffffff;
-	height: 100vh;
 	display: flex;
 	flex-direction: column;
 	justify-content: start;
