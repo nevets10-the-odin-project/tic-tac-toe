@@ -182,6 +182,4 @@ const game = (() => {
 
 	const _playerSetupForm = document.querySelector(".player-setup");
 	_playerSetupForm.addEventListener("submit", _startGame);
-
-	return { _setPlayers, _board, _startGame };
 })();
