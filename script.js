@@ -17,7 +17,14 @@ const game = (() => {
 			element.classList.toggle("hidden");
 		};
 
-		return { toggleVisibility };
+		const _playerNames = document.querySelectorAll(".player h2");
+
+		const updatePlayerNames = () => {
+			_playerNames[0].textContent = _player1.name;
+			_playerNames[1].textContent = _player2.name;
+		};
+
+		return { toggleVisibility, updatePlayerNames };
 	})();
 
 	const _statusDisplay = document.querySelector(".status-display");
@@ -83,12 +90,6 @@ const game = (() => {
 		}
 	};
 
-	const _updatePlayerNames = () => {
-		const playerNames = document.querySelectorAll(".player h2");
-		playerNames[0].textContent = _player1.name;
-		playerNames[1].textContent = _player2.name;
-	};
-
 	const _updateBoard = (currentToken, slotIndex) => {
 		if (_board[slotIndex].token !== null) {
 			return;
@@ -145,7 +146,7 @@ const game = (() => {
 	const startGame = (e) => {
 		e.preventDefault();
 		_setPlayers(e.target);
-		_updatePlayerNames();
+		_DOMControl.updatePlayerNames();
 		_newRound();
 		_DOMControl.toggleVisibility("player-setup");
 		_DOMControl.toggleVisibility("status-display");
