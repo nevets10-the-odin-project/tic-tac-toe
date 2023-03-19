@@ -50,9 +50,8 @@ const game = (() => {
 	let _player1 = null;
 	let _player2 = null;
 
-	const _playerFactory = (newName, isPlayerHuman = true) => {
+	const _playerFactory = (newName, isHuman = true) => {
 		const name = newName;
-		const isHuman = isPlayerHuman;
 		let score = 0;
 		return { name, isHuman, score };
 	};
@@ -101,6 +100,8 @@ const game = (() => {
 		} else {
 			_player2 = _playerFactory(playerForm.player_two.value);
 		}
+
+		console.log(_player2);
 	};
 
 	const _updateBoard = (currentToken, slotIndex) => {
