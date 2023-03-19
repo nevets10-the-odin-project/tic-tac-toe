@@ -185,5 +185,3 @@ const game = (() => {
 
 	return { _setPlayers, _board, startGame };
 })();
-
-//game.startGame();
