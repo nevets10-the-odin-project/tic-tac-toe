@@ -32,10 +32,15 @@ const game = (() => {
 			_board[slotIndex].element.removeEventListener("click", _processChoice);
 		};
 
-		return { toggleVisibility, updatePlayerNames, placeToken };
+		const _statusDisplay = document.querySelector(".status-display");
+
+		const updateStatus = (status) => {
+			_statusDisplay.textContent = status;
+		};
+
+		return { toggleVisibility, updatePlayerNames, placeToken, updateStatus };
 	})();
 
-	const _statusDisplay = document.querySelector(".status-display");
 	const _boardSlots = document.querySelectorAll(".board-slot");
 	_boardSlots.forEach((slot, index) => {
 		_board[index].element = slot;
@@ -106,20 +111,20 @@ const game = (() => {
 		}
 	};
 
-	const _updateStatus = (status) => {
-		_statusDisplay.textContent = status;
-	};
-
 	const _processChoice = (e) => {
 		const slotIndex = _board.map((slot) => slot.element).indexOf(e.target);
 		const currentToken = _isPlayer1Turn ? "X" : "O";
 		_DOMControl.placeToken(currentToken, slotIndex);
 		_updateBoard(currentToken, slotIndex);
 		if (_checkForWin(currentToken, slotIndex)) {
-			_updateStatus(`${_isPlayer1Turn ? _player1.name : _player2.name} won!`);
+			_DOMControl.updateStatus(
+				`${_isPlayer1Turn ? _player1.name : _player2.name} won!`
+			);
 			_endGame();
 		} else {
-			_updateStatus(`${_isPlayer1Turn ? _player2.name : _player1.name}'s turn.`);
+			_DOMControl.updateStatus(
+				`${_isPlayer1Turn ? _player2.name : _player1.name}'s turn.`
+			);
 		}
 		//_board[slotIndex].token = currentToken;
 		_isPlayer1Turn = !_isPlayer1Turn;
@@ -132,7 +137,7 @@ const game = (() => {
 
 	const _newRound = () => {
 		_isPlayer1Turn = true;
-		_updateStatus(`${_player1.name}'s turn`);
+		_DOMControl.updateStatus(`${_player1.name}'s turn`);
 		_board.forEach((slot) => {
 			slot.token = null;
 			slot.element.replaceChildren();
