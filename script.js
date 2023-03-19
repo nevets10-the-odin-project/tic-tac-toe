@@ -94,11 +94,11 @@ const game = (() => {
 	};
 
 	const _setPlayers = (playerForm) => {
+		_player1 = _playerFactory(playerForm.player_one.value);
+
 		if (playerForm.player_count.value === "1") {
-			_player1 = _playerFactory(playerForm.player_one.value);
 			_player2 = _playerFactory(playerForm.player_two.value, false);
 		} else {
-			_player1 = _playerFactory(playerForm.player_one.value);
 			_player2 = _playerFactory(playerForm.player_two.value);
 		}
 	};
