@@ -130,13 +130,8 @@ const game = (() => {
 				`${_isPlayer1Turn ? _player2.name : _player1.name}'s turn.`
 			);
 		}
-		//_board[slotIndex].token = currentToken;
-		_isPlayer1Turn = !_isPlayer1Turn;
 
-		return {
-			//updatedBoard,
-			//hasWon,
-		};
+		_isPlayer1Turn = !_isPlayer1Turn;
 	};
 
 	const _newRound = () => {
