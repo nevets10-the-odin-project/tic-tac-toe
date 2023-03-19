@@ -29,9 +29,8 @@ const game = (() => {
 			_playerNames[1].textContent = _player2.name;
 		};
 
-		const placeToken = (isPlayer1Turn, slotIndex) => {
-			const currentToken = isPlayer1Turn ? _player1.token : _player2.token;
-			_board[slotIndex].element.appendChild(currentToken.cloneNode());
+		const placeToken = (tokenImg, slotIndex) => {
+			_board[slotIndex].element.appendChild(tokenImg.cloneNode());
 			_board[slotIndex].element.removeEventListener("click", _processChoice);
 		};
 
@@ -56,11 +55,12 @@ const game = (() => {
 	const _playerFactory = (isPlayer1, newName, isHuman = true) => {
 		const name = newName;
 		let score = 0;
-		const token = document.createElement("img");
-		token.setAttribute("alt", isPlayer1 ? "X" : "O");
-		token.setAttribute("src", `./img/${isPlayer1 ? "X" : "O"}.png`);
+		const token = isPlayer1 ? "X" : "O";
+		const tokenImg = document.createElement("img");
+		tokenImg.setAttribute("alt", token);
+		tokenImg.setAttribute("src", `./img/${token}.png`);
 
-		return { name, isHuman, score, token };
+		return { name, isHuman, score, token, tokenImg };
 	};
 
 	const _checkForWin = (currentToken, slotIndex) => {
@@ -119,18 +119,15 @@ const game = (() => {
 
 	const _processChoice = (e) => {
 		const slotIndex = _board.map((slot) => slot.element).indexOf(e.target);
-		const currentToken = _isPlayer1Turn ? "X" : "O";
-		_DOMControl.placeToken(_isPlayer1Turn, slotIndex);
-		_updateBoard(currentToken, slotIndex);
-		if (_checkForWin(currentToken, slotIndex)) {
-			_DOMControl.updateStatus(
-				`${_isPlayer1Turn ? _player1.name : _player2.name} won!`
-			);
+		const currentPlayer = _isPlayer1Turn ? _player1 : _player2;
+		const otherPlayer = _isPlayer1Turn ? _player2 : _player1;
+		_DOMControl.placeToken(currentPlayer.tokenImg, slotIndex);
+		_updateBoard(currentPlayer.token, slotIndex);
+		if (_checkForWin(currentPlayer.token, slotIndex)) {
+			_DOMControl.updateStatus(`${currentPlayer.name} won!`);
 			_endGame();
 		} else {
-			_DOMControl.updateStatus(
-				`${_isPlayer1Turn ? _player2.name : _player1.name}'s turn.`
-			);
+			_DOMControl.updateStatus(`${otherPlayer.name}'s turn.`);
 		}
 
 		_isPlayer1Turn = !_isPlayer1Turn;
