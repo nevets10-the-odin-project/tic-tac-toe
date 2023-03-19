@@ -13,12 +13,14 @@ body {
 	display: flex;
 	flex-direction: column;
 	justify-content: start;
+	align-items: center;
 	gap: 4rem;
 	font-size: 1.6rem;
 }
 
 header {
 	display: flex;
+	align-self: stretch;
 	align-items: center;
 	gap: 2.6rem;
 	background-color: #333333;
@@ -92,7 +94,7 @@ button {
 
 .main {
 	display: flex;
-	justify-content: space-around;
+	gap: 2rem;
 }
 
 img {
@@ -103,10 +105,10 @@ img {
 .player {
 	background-color: #333333;
 	padding: 1.6rem;
-	font-size: 4rem;
+	font-size: 3rem;
 	text-align: center;
-	width: 25rem;
-	height: 35rem;
+	width: 15rem;
+	height: 25rem;
 }
 
 .player h2 {
@@ -115,8 +117,8 @@ img {
 
 .board {
 	display: grid;
-	grid-template-columns: repeat(3, 25rem);
-	grid-template-rows: repeat(3, 25rem);
+	grid-template-columns: repeat(3, 15rem);
+	grid-template-rows: repeat(3, 15rem);
 	gap: 1rem;
 }
 
