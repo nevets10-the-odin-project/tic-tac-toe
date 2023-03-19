@@ -147,7 +147,7 @@ const game = (() => {
 	const _newRoundBtn = document.querySelector(".new-round");
 	_newRoundBtn.addEventListener("click", _newRound);
 
-	const startGame = (e) => {
+	const _startGame = (e) => {
 		e.preventDefault();
 		_setPlayers(e.target);
 		_DOMControl.updatePlayerNames();
@@ -181,7 +181,7 @@ const game = (() => {
 	_continueBtn.addEventListener("click", _howToContinue);
 
 	const _playerSetupForm = document.querySelector(".player-setup");
-	_playerSetupForm.addEventListener("submit", startGame);
+	_playerSetupForm.addEventListener("submit", _startGame);
 
-	return { _setPlayers, _board, startGame };
+	return { _setPlayers, _board, _startGame };
 })();
