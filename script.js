@@ -29,11 +29,9 @@ const game = (() => {
 			_playerNames[1].textContent = _player2.name;
 		};
 
-		const placeToken = (currentToken, slotIndex) => {
-			const img = document.createElement("img");
-			img.setAttribute("alt", currentToken);
-			img.setAttribute("src", `./img/${currentToken}.png`);
-			_board[slotIndex].element.appendChild(img);
+		const placeToken = (isPlayer1Turn, slotIndex) => {
+			const currentToken = isPlayer1Turn ? _player1.token : _player2.token;
+			_board[slotIndex].element.appendChild(currentToken.cloneNode());
 			_board[slotIndex].element.removeEventListener("click", _processChoice);
 		};
 
@@ -55,10 +53,14 @@ const game = (() => {
 	let _player1 = null;
 	let _player2 = null;
 
-	const _playerFactory = (newName, isHuman = true) => {
+	const _playerFactory = (isPlayer1, newName, isHuman = true) => {
 		const name = newName;
 		let score = 0;
-		return { name, isHuman, score };
+		const token = document.createElement("img");
+		token.setAttribute("alt", isPlayer1 ? "X" : "O");
+		token.setAttribute("src", `./img/${isPlayer1 ? "X" : "O"}.png`);
+
+		return { name, isHuman, score, token };
 	};
 
 	const _checkForWin = (currentToken, slotIndex) => {
@@ -98,12 +100,12 @@ const game = (() => {
 	};
 
 	const _setPlayers = (playerForm) => {
-		_player1 = _playerFactory(playerForm.player_one.value);
+		_player1 = _playerFactory(true, playerForm.player_one.value);
 
 		if (playerForm.player_count.value === "1") {
-			_player2 = _playerFactory(playerForm.player_two.value, false);
+			_player2 = _playerFactory(false, playerForm.player_two.value, false);
 		} else {
-			_player2 = _playerFactory(playerForm.player_two.value);
+			_player2 = _playerFactory(false, playerForm.player_two.value);
 		}
 	};
 
@@ -118,7 +120,7 @@ const game = (() => {
 	const _processChoice = (e) => {
 		const slotIndex = _board.map((slot) => slot.element).indexOf(e.target);
 		const currentToken = _isPlayer1Turn ? "X" : "O";
-		_DOMControl.placeToken(currentToken, slotIndex);
+		_DOMControl.placeToken(_isPlayer1Turn, slotIndex);
 		_updateBoard(currentToken, slotIndex);
 		if (_checkForWin(currentToken, slotIndex)) {
 			_DOMControl.updateStatus(
