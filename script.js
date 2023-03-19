@@ -11,16 +11,20 @@ const game = (() => {
 		{ token: null, element: null, row: 2, col: 2, diag: 0 },
 	];
 
+	const _DOMControl = (() => {
+		const toggleVisibility = (className) => {
+			const element = document.querySelector(`.${className}`);
+			element.classList.toggle("hidden");
+		};
+
+		return { toggleVisibility };
+	})();
+
 	const _statusDisplay = document.querySelector(".status-display");
 	const _boardSlots = document.querySelectorAll(".board-slot");
 	_boardSlots.forEach((slot, index) => {
 		_board[index].element = slot;
 	});
-
-	const _toggleVisibility = (className) => {
-		const element = document.querySelector(`.${className}`);
-		element.classList.toggle("hidden");
-	};
 
 	let _isPlayer1Turn = true;
 	let _player1 = null;
@@ -143,15 +147,15 @@ const game = (() => {
 		_setPlayers(e.target);
 		_updatePlayerNames();
 		_newRound();
-		_toggleVisibility("player-setup");
-		_toggleVisibility("status-display");
-		_toggleVisibility("main");
+		_DOMControl.toggleVisibility("player-setup");
+		_DOMControl.toggleVisibility("status-display");
+		_DOMControl.toggleVisibility("main");
 	};
 
 	const _reset = () => {
-		_toggleVisibility("player-setup");
-		_toggleVisibility("status-display");
-		_toggleVisibility("main");
+		_DOMControl.toggleVisibility("player-setup");
+		_DOMControl.toggleVisibility("status-display");
+		_DOMControl.toggleVisibility("main");
 	};
 
 	const _resetButton = document.querySelector(".reset");
@@ -166,7 +170,7 @@ const game = (() => {
 	const _howToContinue = () => {
 		const howToDiv = document.querySelector(".how-to");
 		howToDiv.classList.add("hidden");
-		_toggleVisibility("player-setup");
+		_DOMControl.toggleVisibility("player-setup");
 	};
 
 	const _continueBtn = document.querySelector(".continue");
