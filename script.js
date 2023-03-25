@@ -34,7 +34,7 @@ const game = (() => {
 			_board[slotIndex].element.removeEventListener("click", _processChoice);
 		};
 
-		const _statusDisplay = document.querySelector(".status-display");
+		const _statusDisplay = document.querySelector(".status-display h2");
 
 		const updateStatus = (status) => {
 			_statusDisplay.textContent = status;
