@@ -47,7 +47,7 @@ button {
 	display: flex;
 	flex-direction: column;
 	gap: 2.4rem;
-	max-width: 50vw;
+	max-width: 50rem;
 	padding: 1.8rem 2.6rem;
 }
 
