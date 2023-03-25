@@ -40,7 +40,22 @@ const game = (() => {
 			_statusDisplay.textContent = status;
 		};
 
-		return { hide, show, updatePlayerNames, placeToken, updateStatus };
+		const _player1Score = document.getElementById("p1_score");
+		const _player2Score = document.getElementById("p2_score");
+
+		const updateScores = () => {
+			_player1Score.textContent = _player1.score;
+			_player2Score.textContent = _player2.score;
+		};
+
+		return {
+			hide,
+			show,
+			updatePlayerNames,
+			placeToken,
+			updateStatus,
+			updateScores,
+		};
 	})();
 
 	const _boardSlots = document.querySelectorAll(".board-slot");
@@ -124,6 +139,8 @@ const game = (() => {
 		_DOMControl.placeToken(currentPlayer.tokenImg, slotIndex);
 		_updateBoard(currentPlayer.token, slotIndex);
 		if (_checkForWin(currentPlayer.token, slotIndex)) {
+			currentPlayer.score++;
+			_DOMControl.updateScores();
 			_DOMControl.updateStatus(`${currentPlayer.name} won!`);
 			_endGame();
 		} else {
@@ -150,6 +167,7 @@ const game = (() => {
 		e.preventDefault();
 		_setPlayers(e.target);
 		_DOMControl.updatePlayerNames();
+		_DOMControl.updateScores();
 		_newRound();
 		_DOMControl.hide("player-setup");
 		_DOMControl.show("status-display");
@@ -157,6 +175,8 @@ const game = (() => {
 	};
 
 	const _reset = () => {
+		_player1.score = 0;
+		_player2.score = 0;
 		_DOMControl.show("player-setup");
 		_DOMControl.hide("status-display");
 		_DOMControl.hide("main");
