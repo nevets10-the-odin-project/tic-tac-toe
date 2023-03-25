@@ -1,5 +1,5 @@
 const game = (() => {
-	const _board = [
+	const board = [
 		{ token: null, element: null, row: 0, col: 0, diag: 0 },
 		{ token: null, element: null, row: 0, col: 1, diag: NaN },
 		{ token: null, element: null, row: 0, col: 2, diag: 2 },
@@ -11,7 +11,7 @@ const game = (() => {
 		{ token: null, element: null, row: 2, col: 2, diag: 0 },
 	];
 
-	const _DOMControl = (() => {
+	const DOMControl = (() => {
 		const hide = (className) => {
 			const element = document.querySelector(`.${className}`);
 			element.classList.add("hidden");
@@ -25,13 +25,13 @@ const game = (() => {
 		const _playerNames = document.querySelectorAll(".player h2");
 
 		const updatePlayerNames = () => {
-			_playerNames[0].textContent = _player1.name;
-			_playerNames[1].textContent = _player2.name;
+			_playerNames[0].textContent = player1.name;
+			_playerNames[1].textContent = player2.name;
 		};
 
 		const placeToken = (tokenImg, slotIndex) => {
-			_board[slotIndex].element.appendChild(tokenImg.cloneNode());
-			_board[slotIndex].element.removeEventListener("click", _processChoice);
+			board[slotIndex].element.appendChild(tokenImg.cloneNode());
+			board[slotIndex].element.removeEventListener("click", processChoice);
 		};
 
 		const _statusDisplay = document.querySelector(".status-display h2");
@@ -44,8 +44,8 @@ const game = (() => {
 		const _player2Score = document.getElementById("p2_score");
 
 		const updateScores = () => {
-			_player1Score.textContent = _player1.score;
-			_player2Score.textContent = _player2.score;
+			_player1Score.textContent = player1.score;
+			_player2Score.textContent = player2.score;
 		};
 
 		return {
@@ -58,16 +58,16 @@ const game = (() => {
 		};
 	})();
 
-	const _boardSlots = document.querySelectorAll(".board-slot");
-	_boardSlots.forEach((slot, index) => {
-		_board[index].element = slot;
+	const boardSlots = document.querySelectorAll(".board-slot");
+	boardSlots.forEach((slot, index) => {
+		board[index].element = slot;
 	});
 
-	let _isPlayer1Turn = true;
-	let _player1 = null;
-	let _player2 = null;
+	let isPlayer1Turn = true;
+	let player1 = null;
+	let player2 = null;
 
-	const _playerFactory = (isPlayer1, newName, isHuman = true) => {
+	const playerFactory = (isPlayer1, newName, isHuman = true) => {
 		const name = newName;
 		let score = 0;
 		const token = isPlayer1 ? "X" : "O";
@@ -78,17 +78,17 @@ const game = (() => {
 		return { name, isHuman, score, token, tokenImg };
 	};
 
-	const _checkForWin = (currentToken, slotIndex) => {
-		const currentSlot = _board[slotIndex];
+	const checkForWin = (currentToken, slotIndex) => {
+		const currentSlot = board[slotIndex];
 
 		const isRowWin =
-			_board
+			board
 				.filter((slot) => slot.row === currentSlot.row)
 				.map((slot) => slot.token)
 				.filter((token) => token === currentToken).length === 3;
 
 		const isColWin =
-			_board
+			board
 				.filter((slot) => slot.col === currentSlot.col)
 				.map((slot) => slot.token)
 				.filter((token) => token === currentToken).length === 3;
@@ -98,13 +98,13 @@ const game = (() => {
 		if (currentSlot.diag !== NaN) {
 			if (currentSlot.diag >= 1) {
 				isDiagonalWin =
-					_board
+					board
 						.filter((slot) => slot.diag >= 1)
 						.map((slot) => slot.token)
 						.filter((token) => token === currentToken).length === 3;
 			} else if (currentSlot.diag <= 1) {
 				isDiagonalWin =
-					_board
+					board
 						.filter((slot) => slot.diag <= 1)
 						.map((slot) => slot.token)
 						.filter((token) => token === currentToken).length === 3;
@@ -114,87 +114,87 @@ const game = (() => {
 		return isRowWin || isColWin || isDiagonalWin;
 	};
 
-	const _setPlayers = (playerForm) => {
-		_player1 = _playerFactory(true, playerForm.player_one.value);
+	const setPlayers = (playerForm) => {
+		player1 = playerFactory(true, playerForm.player_one.value);
 
 		if (playerForm.player_count.value === "1") {
-			_player2 = _playerFactory(false, playerForm.player_two.value, false);
+			player2 = playerFactory(false, playerForm.player_two.value, false);
 		} else {
-			_player2 = _playerFactory(false, playerForm.player_two.value);
+			player2 = playerFactory(false, playerForm.player_two.value);
 		}
 	};
 
-	const _updateBoard = (currentToken, slotIndex) => {
-		if (_board[slotIndex].token !== null) {
+	const updateBoard = (currentToken, slotIndex) => {
+		if (board[slotIndex].token !== null) {
 			return;
 		} else {
-			_board[slotIndex].token = currentToken;
+			board[slotIndex].token = currentToken;
 		}
 	};
 
-	const _processChoice = (e) => {
-		const slotIndex = _board.map((slot) => slot.element).indexOf(e.target);
-		const currentPlayer = _isPlayer1Turn ? _player1 : _player2;
-		const otherPlayer = _isPlayer1Turn ? _player2 : _player1;
-		_DOMControl.placeToken(currentPlayer.tokenImg, slotIndex);
-		_updateBoard(currentPlayer.token, slotIndex);
-		const openSlots = _board.filter((slot) => slot.token === null).length;
-		if (_checkForWin(currentPlayer.token, slotIndex)) {
+	const processChoice = (e) => {
+		const slotIndex = board.map((slot) => slot.element).indexOf(e.target);
+		const currentPlayer = isPlayer1Turn ? player1 : player2;
+		const otherPlayer = isPlayer1Turn ? player2 : player1;
+		DOMControl.placeToken(currentPlayer.tokenImg, slotIndex);
+		updateBoard(currentPlayer.token, slotIndex);
+		const openSlots = board.filter((slot) => slot.token === null).length;
+		if (checkForWin(currentPlayer.token, slotIndex)) {
 			currentPlayer.score++;
-			_DOMControl.updateScores();
-			_DOMControl.updateStatus(`${currentPlayer.name} won!`);
-			_endGame();
+			DOMControl.updateScores();
+			DOMControl.updateStatus(`${currentPlayer.name} won!`);
+			endGame();
 		} else if (openSlots <= 0) {
-			_DOMControl.updateStatus("Tie!");
-			_endGame();
+			DOMControl.updateStatus("Tie!");
+			endGame();
 		} else {
-			_DOMControl.updateStatus(`${otherPlayer.name}'s turn.`);
+			DOMControl.updateStatus(`${otherPlayer.name}'s turn.`);
 		}
 
-		_isPlayer1Turn = !_isPlayer1Turn;
+		isPlayer1Turn = !isPlayer1Turn;
 	};
 
-	const _newRound = () => {
-		_isPlayer1Turn = true;
-		_DOMControl.updateStatus(`${_player1.name}'s turn`);
-		_board.forEach((slot) => {
+	const newRound = () => {
+		isPlayer1Turn = true;
+		DOMControl.updateStatus(`${player1.name}'s turn`);
+		board.forEach((slot) => {
 			slot.token = null;
 			slot.element.replaceChildren();
-			slot.element.addEventListener("click", _processChoice);
+			slot.element.addEventListener("click", processChoice);
 		});
 	};
 
-	const _newRoundBtn = document.querySelector(".new-round");
-	_newRoundBtn.addEventListener("click", _newRound);
+	const newRoundBtn = document.querySelector(".new-round");
+	newRoundBtn.addEventListener("click", newRound);
 
-	const _startGame = (e) => {
+	const startGame = (e) => {
 		e.preventDefault();
-		_setPlayers(e.target);
-		_DOMControl.updatePlayerNames();
-		_DOMControl.updateScores();
-		_newRound();
-		_DOMControl.hide("player-setup");
-		_DOMControl.show("status-display");
-		_DOMControl.show("main");
+		setPlayers(e.target);
+		DOMControl.updatePlayerNames();
+		DOMControl.updateScores();
+		newRound();
+		DOMControl.hide("player-setup");
+		DOMControl.show("status-display");
+		DOMControl.show("main");
 	};
 
-	const _reset = () => {
-		_player1.score = 0;
-		_player2.score = 0;
-		_DOMControl.show("player-setup");
-		_DOMControl.hide("status-display");
-		_DOMControl.hide("main");
+	const reset = () => {
+		player1.score = 0;
+		player2.score = 0;
+		DOMControl.show("player-setup");
+		DOMControl.hide("status-display");
+		DOMControl.hide("main");
 	};
 
-	const _resetButton = document.querySelector(".reset");
-	_resetButton.addEventListener("click", _reset);
+	const resetButton = document.querySelector(".reset");
+	resetButton.addEventListener("click", reset);
 
-	const _endGame = () => {
-		_board.forEach((slot) => {
-			slot.element.removeEventListener("click", _processChoice);
+	const endGame = () => {
+		board.forEach((slot) => {
+			slot.element.removeEventListener("click", processChoice);
 		});
 	};
 
-	const _playerSetupForm = document.querySelector(".player-setup");
-	_playerSetupForm.addEventListener("submit", _startGame);
+	const playerSetupForm = document.querySelector(".player-setup");
+	playerSetupForm.addEventListener("submit", startGame);
 })();
