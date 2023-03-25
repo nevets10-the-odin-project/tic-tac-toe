@@ -52,6 +52,7 @@ button {
 }
 
 .player-count {
+	align-self: center;
 	display: flex;
 	gap: 2rem;
 }
