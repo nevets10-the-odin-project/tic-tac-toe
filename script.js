@@ -195,14 +195,6 @@ const game = (() => {
 		});
 	};
 
-	const _howToContinue = () => {
-		_DOMControl.hide("how-to");
-		_DOMControl.show("player-setup");
-	};
-
-	const _continueBtn = document.querySelector(".continue");
-	_continueBtn.addEventListener("click", _howToContinue);
-
 	const _playerSetupForm = document.querySelector(".player-setup");
 	_playerSetupForm.addEventListener("submit", _startGame);
 })();
