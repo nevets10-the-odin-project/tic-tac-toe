@@ -38,6 +38,7 @@ button {
 	font-size: 4rem;
 	display: grid;
 	place-items: center;
+	gap: 1.6rem;
 }
 
 .player-setup {
