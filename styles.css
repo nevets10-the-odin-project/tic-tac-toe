@@ -34,7 +34,6 @@ button {
 }
 
 .status-display {
-	align-self: center;
 	font-size: 4rem;
 	display: grid;
 	place-items: center;
