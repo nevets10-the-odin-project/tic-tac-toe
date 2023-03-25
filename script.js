@@ -138,10 +138,14 @@ const game = (() => {
 		const otherPlayer = _isPlayer1Turn ? _player2 : _player1;
 		_DOMControl.placeToken(currentPlayer.tokenImg, slotIndex);
 		_updateBoard(currentPlayer.token, slotIndex);
+		const openSlots = _board.filter((slot) => slot.token === null).length;
 		if (_checkForWin(currentPlayer.token, slotIndex)) {
 			currentPlayer.score++;
 			_DOMControl.updateScores();
 			_DOMControl.updateStatus(`${currentPlayer.name} won!`);
+			_endGame();
+		} else if (openSlots <= 0) {
+			_DOMControl.updateStatus("Tie!");
 			_endGame();
 		} else {
 			_DOMControl.updateStatus(`${otherPlayer.name}'s turn.`);
