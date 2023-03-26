@@ -22,14 +22,14 @@
 			<h3>Player Setup</h3>
 			<div class="player-count">
 				<label>
-					<input type="radio" name="player_count" value="1" checked />
+					<input type="radio" name="player_count" id="p1_radio" value="1" checked />
 					<div>
 						<img src="./img/one_player.png" alt="one player" />
 						<p>One player</p>
 					</div>
 				</label>
 				<label>
-					<input type="radio" name="player_count" value="2" />
+					<input type="radio" name="player_count" id="p2_radio" value="2" />
 					<div>
 						<img src="./img/two_player.png" alt="two players" />
 						<p>Two players</p>
@@ -43,7 +43,13 @@
 				</div>
 				<div class="player-two-name">
 					<label for="player_two">Player Two's Name</label>
-					<input type="text" name="player_two" id="player_two" value="Player 2" />
+					<input
+						type="text"
+						name="player_two"
+						id="player_two"
+						value="Player 2"
+						disabled
+					/>
 				</div>
 			</div>
 			<button id="start_game" type="submit">Play</button>

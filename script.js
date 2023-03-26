@@ -48,6 +48,25 @@ const game = (() => {
 			_player2Score.textContent = player2.score;
 		};
 
+		const _togglePlayer2Name = (e) => {
+			const player1Radio = document.getElementById("p1_radio");
+			const player2Name = document.getElementById("player_two");
+
+			if (player1Radio.checked) {
+				player2Name.disabled = true;
+			} else {
+				player2Name.disabled = false;
+			}
+		};
+
+		const _playerCountRadios = document.querySelectorAll(
+			"input[name='player_count']"
+		);
+
+		_playerCountRadios.forEach((radio) => {
+			radio.addEventListener("click", _togglePlayer2Name);
+		});
+
 		return {
 			hide,
 			show,
@@ -78,7 +97,7 @@ const game = (() => {
 	let player2 = null;
 
 	const playerFactory = (isPlayer1, newName, isHuman = true) => {
-		const name = newName;
+		const name = isHuman ? newName : "Computer";
 		let score = 0;
 		const token = isPlayer1 ? "X" : "O";
 		const tokenImg = document.createElement("img");
