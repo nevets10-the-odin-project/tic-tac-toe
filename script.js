@@ -96,10 +96,9 @@ const game = (() => {
 	let player1 = null;
 	let player2 = null;
 
-	const playerFactory = (isPlayer1, newName, isHuman = true) => {
+	const playerFactory = (token, newName, isHuman = true) => {
 		const name = isHuman ? newName : "Computer";
 		let score = 0;
-		const token = isPlayer1 ? "X" : "O";
 		const tokenImg = document.createElement("img");
 		tokenImg.setAttribute("alt", token);
 		tokenImg.setAttribute("src", `./img/${token}.png`);
@@ -144,12 +143,12 @@ const game = (() => {
 	};
 
 	const setPlayers = (playerForm) => {
-		player1 = playerFactory(true, playerForm.player_one.value);
+		player1 = playerFactory("X", playerForm.player_one.value);
 
 		if (playerForm.player_count.value === "1") {
-			player2 = playerFactory(false, playerForm.player_two.value, false);
+			player2 = playerFactory("O", playerForm.player_two.value, false);
 		} else {
-			player2 = playerFactory(false, playerForm.player_two.value);
+			player2 = playerFactory("O", playerForm.player_two.value);
 		}
 	};
 
