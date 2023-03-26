@@ -11,7 +11,7 @@ const game = (() => {
 		{ token: null, element: null, row: 2, col: 2, diag: 0 },
 	];
 
-	const DOMControl = (() => {
+	const displayControl = (() => {
 		const hide = (className) => {
 			const element = document.querySelector(`.${className}`);
 			element.classList.add("hidden");
@@ -77,7 +77,7 @@ const game = (() => {
 		};
 	})();
 
-	const AIChoice = (() => {
+	const computerChoice = (() => {
 		const random = (openSlots) => {
 			const randomIndex = Math.floor(Math.random() * openSlots.length);
 			const selection = openSlots[randomIndex];
@@ -165,23 +165,23 @@ const game = (() => {
 		const otherPlayer = isPlayer1Turn ? player2 : player1;
 		isPlayer1Turn = !isPlayer1Turn;
 
-		DOMControl.placeToken(currentPlayer.tokenImg, slotIndex);
+		displayControl.placeToken(currentPlayer.tokenImg, slotIndex);
 
 		updateBoard(currentPlayer.token, slotIndex);
 		const openSlots = board.filter((slot) => slot.token === null);
 
 		if (checkForWin(currentPlayer.token, slotIndex)) {
 			currentPlayer.score++;
-			DOMControl.updateScores();
-			DOMControl.updateStatus(`${currentPlayer.name} won!`);
+			displayControl.updateScores();
+			displayControl.updateStatus(`${currentPlayer.name} won!`);
 			endGame();
 		} else if (openSlots.length <= 0) {
-			DOMControl.updateStatus("Tie!");
+			displayControl.updateStatus("Tie!");
 			endGame();
 		} else if (!otherPlayer.isHuman) {
-			AIChoice.random(openSlots);
+			computerChoice.random(openSlots);
 		} else {
-			DOMControl.updateStatus(`${otherPlayer.name}'s turn`);
+			displayControl.updateStatus(`${otherPlayer.name}'s turn`);
 		}
 	};
 
@@ -192,7 +192,7 @@ const game = (() => {
 
 	const newRound = () => {
 		isPlayer1Turn = true;
-		DOMControl.updateStatus(`${player1.name}'s turn`);
+		displayControl.updateStatus(`${player1.name}'s turn`);
 		board.forEach((slot) => {
 			slot.token = null;
 			slot.element.replaceChildren();
@@ -206,20 +206,20 @@ const game = (() => {
 	const startGame = (e) => {
 		e.preventDefault();
 		setPlayers(e.target);
-		DOMControl.updatePlayerNames();
-		DOMControl.updateScores();
+		displayControl.updatePlayerNames();
+		displayControl.updateScores();
 		newRound();
-		DOMControl.hide("player-setup");
-		DOMControl.show("status-display");
-		DOMControl.show("main");
+		displayControl.hide("player-setup");
+		displayControl.show("status-display");
+		displayControl.show("main");
 	};
 
 	const reset = () => {
 		player1.score = 0;
 		player2.score = 0;
-		DOMControl.show("player-setup");
-		DOMControl.hide("status-display");
-		DOMControl.hide("main");
+		displayControl.show("player-setup");
+		displayControl.hide("status-display");
+		displayControl.hide("main");
 	};
 
 	const resetButton = document.querySelector(".reset");
