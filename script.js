@@ -135,9 +135,7 @@ const game = (() => {
 	};
 
 	const updateBoard = (currentToken, slotIndex) => {
-		if (board[slotIndex].token !== null) {
-			return;
-		} else {
+		if (board[slotIndex].token === null) {
 			board[slotIndex].token = currentToken;
 		}
 	};
