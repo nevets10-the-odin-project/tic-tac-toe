@@ -31,7 +31,7 @@ const game = (() => {
 
 		const placeToken = (tokenImg, slotIndex) => {
 			board[slotIndex].element.appendChild(tokenImg.cloneNode());
-			board[slotIndex].element.removeEventListener("click", processChoice);
+			board[slotIndex].element.removeEventListener("click", clickHandler);
 		};
 
 		const _statusDisplay = document.querySelector(".status-display h2");
@@ -56,6 +56,16 @@ const game = (() => {
 			updateStatus,
 			updateScores,
 		};
+	})();
+
+	const AIChoice = (() => {
+		const random = (openSlots) => {
+			const randomIndex = Math.floor(Math.random() * openSlots.length);
+			const selection = openSlots[randomIndex];
+			processChoice(selection.element);
+		};
+
+		return { random };
 	})();
 
 	const boardSlots = document.querySelectorAll(".board-slot");
@@ -132,26 +142,36 @@ const game = (() => {
 		}
 	};
 
-	const processChoice = (e) => {
-		const slotIndex = board.map((slot) => slot.element).indexOf(e.target);
+	const processChoice = (clickedElement) => {
+		const slotIndex = board.map((slot) => slot.element).indexOf(clickedElement);
+
 		const currentPlayer = isPlayer1Turn ? player1 : player2;
 		const otherPlayer = isPlayer1Turn ? player2 : player1;
+		isPlayer1Turn = !isPlayer1Turn;
+
 		DOMControl.placeToken(currentPlayer.tokenImg, slotIndex);
+
 		updateBoard(currentPlayer.token, slotIndex);
-		const openSlots = board.filter((slot) => slot.token === null).length;
+		const openSlots = board.filter((slot) => slot.token === null);
+
 		if (checkForWin(currentPlayer.token, slotIndex)) {
 			currentPlayer.score++;
 			DOMControl.updateScores();
 			DOMControl.updateStatus(`${currentPlayer.name} won!`);
 			endGame();
-		} else if (openSlots <= 0) {
+		} else if (openSlots.length <= 0) {
 			DOMControl.updateStatus("Tie!");
 			endGame();
+		} else if (!otherPlayer.isHuman) {
+			AIChoice.random(openSlots);
 		} else {
-			DOMControl.updateStatus(`${otherPlayer.name}'s turn.`);
+			DOMControl.updateStatus(`${otherPlayer.name}'s turn`);
 		}
+	};
 
-		isPlayer1Turn = !isPlayer1Turn;
+	const clickHandler = (event) => {
+		const element = event.target;
+		processChoice(element);
 	};
 
 	const newRound = () => {
@@ -160,7 +180,7 @@ const game = (() => {
 		board.forEach((slot) => {
 			slot.token = null;
 			slot.element.replaceChildren();
-			slot.element.addEventListener("click", processChoice);
+			slot.element.addEventListener("click", clickHandler);
 		});
 	};
 
@@ -191,7 +211,7 @@ const game = (() => {
 
 	const endGame = () => {
 		board.forEach((slot) => {
-			slot.element.removeEventListener("click", processChoice);
+			slot.element.removeEventListener("click", clickHandler);
 		});
 	};
 
