@@ -1,7 +1,12 @@
-# tic-tac-toe
-Tic Tac Toe project from the Full Stack JavaScript path
+# Project: Tic Tac Toe
 
-Project prompt: https://www.theodinproject.com/lessons/node-path-javascript-tic-tac-toe
+https://www.theodinproject.com/lessons/node-path-javascript-tic-tac-toe
+
+Live example: https://nevets10-the-odin-project.github.io/tic-tac-toe/
+
+## Introduction
+
+We’re making a Tic Tac Toe game you can play in your browser!
 
 ## Post project reflection
 Took some time off from the project to disconnect a bit. I think the overall outcome is satisfactory. Although some things I implemented feel kinda weird like having nested module IIFEs to organize the code. The AI also only selects random available slots. Anything more advanced I think would be too outside the scope of the project to spend time on. I could also probably spent a lot more time trying to make things perfect, but I'm cutting myself off now since it's close enough. An experienced colleague recently mentioned that if the impact of something is less than 20% of the overall functionality, it's not worth the time and effort to address.
